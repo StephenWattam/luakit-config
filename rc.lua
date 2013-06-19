@@ -153,9 +153,9 @@ require "go_up"
 
 
 -- Enable scrollbars
-webview.init_funcs.show_scrollbars = function(view) 
-    view.show_scrollbars = true 
-end
+--webview.init_funcs.show_scrollbars = function(view) 
+--    view.show_scrollbars = true 
+--end
 
 
 -----------------------------
