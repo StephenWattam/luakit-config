@@ -19,9 +19,16 @@ globals = {
 local _, arch = luakit.spawn_sync("uname -sm")
 -- Only use the luakit version if in date format (reduces identifiability)
 local lkv = string.match(luakit.version, "^(%d+.%d+.%d+)")
-globals.useragent = string.format("Mozilla/5.0 (%s) AppleWebKit/%s+ (KHTML, like Gecko) WebKitGTK+/%s luakit%s",
-    string.sub(arch, 1, -2), luakit.webkit_user_agent_version,
-    luakit.webkit_version, (lkv and ("/" .. lkv)) or "")
+--globals.useragent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36"
+globals.useragent = string.format("Mozilla/5.0 (%s) AppleWebKit/%s+ (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/%s WebKitGTK+/%s luakit%s",
+    string.sub(arch, 1, -2), 
+    luakit.webkit_user_agent_version,
+    luakit.webkit_version, 
+    luakit.webkit_version, 
+    (lkv and ("/" .. lkv)) or "")
+--globals.useragent = string.format("Mozilla/5.0 (%s) AppleWebKit/%s+ (KHTML, like Gecko) Chrome/24.0.1312.57 WebKitGTK+/%s luakit%s",
+--    string.sub(arch, 1, -2), luakit.webkit_user_agent_version,
+--    luakit.webkit_version, (lkv and ("/" .. lkv)) or "")
 
 -- Search common locations for a ca file which is used for ssl connection validation.
 local ca_files = {
@@ -51,13 +58,12 @@ soup.accept_policy = cookie_policy.always
 -- it to avoid collisions with lua's string.format characters.
 -- See: http://www.lua.org/manual/5.1/manual.html#pdf-string.format
 search_engines = {
-    duckduckgo  = "https://duckduckgo.com/?q=%s",
-    github      = "https://github.com/search?q=%s",
-    google      = "https://google.co.uk/search?q=%s",
+    g      = "https://google.co.uk/search?q=%s",
     lucky       = "http://google.co.uk/search?q=%s&btnI=I",
     imdb        = "http://www.imdb.com/find?s=all&q=%s",
     wikipedia   = "https://en.wikipedia.org/wiki/Special:Search?search=%s",
     scholar     = "http://scholar.google.co.uk/scholar?hl=en&q=%s",
+    amazon      = "http://www.amazon.co.uk/s/ref=nb_sb_noss/279-5358580-1723857?url=search-alias>aps&field-keywords=%s",
 }
 
 -- Set google as fallback search engine
@@ -83,6 +89,12 @@ domain_props = {
         user_stylesheet_uri     = "file://" .. luakit.data_dir .. "/styles/dark.css",
         enable_private_browsing = true,
     }, ]]
+    --['google.com'] = {
+    --    user_agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36",
+    --},
+    --['google.co.uk'] = {
+    --    user_agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36",
+    --},
 }
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80

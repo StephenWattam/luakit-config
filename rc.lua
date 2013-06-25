@@ -158,6 +158,32 @@ require "go_up"
 --end
 
 
+
+window.methods.update_progress = function (w)
+        local p = w.view.progress
+        local loaded = w.sbar.l.loaded
+        if not w.view:loading() or p == 1 then
+            loaded:hide()
+        else
+            loaded:show()
+--
+--            local pbar2 = {"▁","▂","▃","▄","▅","▆","▇","█"}
+--            local pchar = pbar2[(math.floor(p*100)%#pbar2)+1]
+--            local text = string.format("(%d%% %s)", p * 100, pchar)
+--            if loaded.text ~= text then loaded.text = text end
+--
+
+            local pbar = {" "," "," "," "," "," "," "," "," "," "}
+            for i=1,math.floor((p*10)) do pbar[i] ="=" end
+            local text = string.format("[%s] %d%%", table.concat(pbar,""), p * 100)
+            if loaded.text ~= text then loaded.text = text end
+            --loaded.text = string.format("(%d%%...)", p * 100)
+        end
+    end
+
+
+
+
 -----------------------------
 -- End user script loading --
 -----------------------------
@@ -191,6 +217,11 @@ if unique then
         w.win.urgency_hint = true
     end)
 end
+
+
+
+
+
 
 
 
